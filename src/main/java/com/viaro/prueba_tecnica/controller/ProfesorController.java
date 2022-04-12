@@ -27,6 +27,11 @@ public class ProfesorController {
     @PostMapping
     public ResponseEntity<Mensaje> guardar(@RequestBody ProfesorDto profesor) {
 
+        if (!profesor.getGenero().equals("HOMBRE") || !profesor.getGenero().equals("MUJER")) {
+            Mensaje mensaje = new Mensaje("Debes selecciones un género!!!");
+            return new ResponseEntity<Mensaje>(mensaje, HttpStatus.OK);
+        }
+
         Profesor nuevoProfesor = new Profesor();
         nuevoProfesor.setNombre(profesor.getNombre());
         nuevoProfesor.setApellidos(profesor.getApellidos());

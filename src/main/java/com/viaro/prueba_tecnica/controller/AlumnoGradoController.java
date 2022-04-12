@@ -38,6 +38,16 @@ public class AlumnoGradoController {
     @PostMapping
     public ResponseEntity<Mensaje> guardar(@RequestBody GradoAlumnoDto gradoAlumno) {
 
+        if (gradoAlumno.getGrado() == null || gradoAlumno.getGrado() < 1) {
+            Mensaje mensaje = new Mensaje("Debes seleccionar a un grado...");
+            return new ResponseEntity<Mensaje>(mensaje, HttpStatus.NOT_FOUND);
+        }
+
+        if (gradoAlumno.getAlumno() == null || gradoAlumno.getAlumno() < 1) {
+            Mensaje mensaje = new Mensaje("Debes seleccionar a un alumno...");
+            return new ResponseEntity<Mensaje>(mensaje, HttpStatus.NOT_FOUND);
+        }
+        
         List<AlumnoGrado> alumnosConGrado = this.gradoAlumnoServ.listar();
         List<Alumno> alumnosGrado =
                 alumnosConGrado.stream().map(item -> item.getAlumno())
